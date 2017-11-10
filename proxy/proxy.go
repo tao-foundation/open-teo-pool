@@ -45,6 +45,7 @@ type Session struct {
 	sync.Mutex
 	conn  *net.TCPConn
 	login string
+	lastErr error
 }
 
 func NewProxy(cfg *Config, backend *storage.RedisClient) *ProxyServer {
