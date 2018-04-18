@@ -29,6 +29,11 @@ module.exports = function(environment) {
       PoolFee: '0.2%',
       PayoutThreshold: '0.5 TEO',
 
+      // Basic coin info for extra features support
+      Unit: 'TEO',
+      EtherUnit: 'TEO',
+      BlockReward: 5,
+
       // For network hashrate (change for your favourite fork)
       BlockTime: 14.4
     }

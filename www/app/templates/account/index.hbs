@@ -9,6 +9,7 @@
           <th>ID</th>
           <th>Hashrate (rough, short average)</th>
           <th>Hashrate (accurate, long average)</th>
+          <th>Estimated Coins (24h)</th>
           <th>Last Share</th>
         </tr>
       </thead>
@@ -18,6 +19,7 @@
             <td>{{k}}</td>
             <td>{{format-hashrate v.hr}}</td>
             <td>{{format-hashrate v.hr2}}</td>
+            <td>{{format-number (worker-earnperday v.hr netstats.hashrate)}}</td>
             <td>{{format-relative (seconds-to-ms v.lastBeat)}}</td>
           </tr>
         {{/each-in}}
