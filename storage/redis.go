@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"math/big"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -43,6 +44,15 @@ type PaymentCharts struct {
 	Timestamp  int64  `json:"x"`
 	TimeFormat string `json:"timeFormat"`
 	Amount     int64  `json:"amount"`
+}
+
+type LuckCharts struct {
+	Timestamp  int64   `json:"x"`
+	Height     int64   `json:"height"`
+	Difficulty int64   `json:"difficulty"`
+	Shares     int64   `json:"shares"`
+	SharesDiff float64 `json:"sharesDiff"`
+	Reward     string  `json:"reward"`
 }
 
 type BlockData struct {
@@ -969,6 +979,44 @@ func (r *RedisClient) CollectLuckStats(windows []int) (map[string]interface{}, e
 	}
 	return stats, nil
 }
+
+func (r *RedisClient) CollectLuckCharts(max int) (stats []*LuckCharts, err error) {
+	var result []*LuckCharts
+	tx := r.client.Multi()
+	defer tx.Close()
+
+	cmds, err := tx.Exec(func() error {
+		tx.ZRevRangeWithScores(r.formatKey("blocks", "matured"), 0, int64(max-1))
+		return nil
+	})
+	if err != nil {
+		return result, err
+	}
+	blocks := convertBlockResults(cmds[0].(*redis.ZSliceCmd))
+
+	for i, block := range blocks {
+		if i > (max - 1) {
+			break
+		}
+		lc := LuckCharts{}
+		var sharesDiff = float64(block.TotalShares) / float64(block.Difficulty)
+		lc.Timestamp = block.Timestamp
+		lc.Height = block.RoundHeight
+		lc.Difficulty = block.Difficulty
+		lc.Shares = block.TotalShares
+		lc.SharesDiff = sharesDiff
+		lc.Reward = block.RewardString
+		result = append(result, &lc)
+	}
+	sort.Sort(TimestampSorter(result))
+	return result, nil
+}
+
+type TimestampSorter []*LuckCharts
+
+func (a TimestampSorter) Len() int           { return len(a) }
+func (a TimestampSorter) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a TimestampSorter) Less(i, j int) bool { return a[i].Timestamp < a[j].Timestamp }
 
 func convertCandidateResults(raw *redis.ZSliceCmd) []*BlockData {
 	var result []*BlockData

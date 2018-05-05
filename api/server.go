@@ -225,6 +225,7 @@ func (s *ApiServer) collectStats() {
 	}
 	if len(s.config.LuckWindow) > 0 {
 		stats["luck"], err = s.backend.CollectLuckStats(s.config.LuckWindow)
+		stats["luckCharts"], err = s.backend.CollectLuckCharts(s.config.LuckWindow[0])
 		if err != nil {
 			log.Printf("Failed to fetch luck stats from backend: %v", err)
 			return
@@ -312,6 +313,7 @@ func (s *ApiServer) BlocksIndex(w http.ResponseWriter, r *http.Request) {
 		reply["candidates"] = stats["candidates"]
 		reply["candidatesTotal"] = stats["candidatesTotal"]
 		reply["luck"] = stats["luck"]
+		reply["luckCharts"] = stats["luckCharts"]
 	}
 
 	err := json.NewEncoder(w).Encode(reply)
