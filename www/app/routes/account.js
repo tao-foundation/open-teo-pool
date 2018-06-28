@@ -24,6 +24,9 @@ export default Ember.Route.extend({
         data.paymentCharts = self.get('paymentCharts');
       }
       data.login = params.login;
+
+      // reverse payments
+      data.payments = data.payments.reverse();
       return Ember.Object.create(data);
     });
 	},
