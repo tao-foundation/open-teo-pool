@@ -7,7 +7,8 @@ export default Ember.Route.extend({
     var url = config.APP.ApiUrl + 'api/payments';
     return Ember.$.getJSON(url).then(function(data) {
 			if (data.payments) {
-				data.payments = data.payments.map(function(p) {
+				var payments = data.payments.reverse();
+				data.payments = payments.map(function(p) {
 					return Payment.create(p);
 				});
 			}
