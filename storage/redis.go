@@ -280,7 +280,7 @@ func (r *RedisClient) GetPaymentCharts(login string) (stats []*PaymentCharts, er
 	return stats, nil
 }
 
-func (r *RedisClient) WriteNodeState(id string, height uint64, diff *big.Int) error {
+func (r *RedisClient) WriteNodeState(id string, height uint64, diff *big.Int, blocktime float64) error {
 	tx := r.client.Multi()
 	defer tx.Close()
 
@@ -291,6 +291,7 @@ func (r *RedisClient) WriteNodeState(id string, height uint64, diff *big.Int) er
 		tx.HSet(r.formatKey("nodes"), join(id, "height"), strconv.FormatUint(height, 10))
 		tx.HSet(r.formatKey("nodes"), join(id, "difficulty"), diff.String())
 		tx.HSet(r.formatKey("nodes"), join(id, "lastBeat"), strconv.FormatInt(now, 10))
+		tx.HSet(r.formatKey("nodes"), join(id, "blocktime"), strconv.FormatFloat(blocktime, 'f', 4, 64))
 		return nil
 	})
 	return err

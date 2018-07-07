@@ -33,9 +33,20 @@ export default Ember.Controller.extend({
     }
   }),
 
+  blockTime: Ember.computed('model.nodes', {
+    get() {
+      var node = this.get('bestNode');
+      if (node && node.blocktime) {
+        return node.blocktime;
+      }
+      return config.APP.BlockTime;
+    }
+  }),
+
   hashrate: Ember.computed('difficulty', {
     get() {
-      return this.getWithDefault('difficulty', 0) / config.APP.BlockTime;
+      var blockTime = this.get('blockTime');
+      return this.getWithDefault('difficulty', 0) / blockTime;
     }
   }),
 
