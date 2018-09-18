@@ -6,6 +6,54 @@ export default Ember.Controller.extend({
   config: Ember.computed.reads('applicationController.config'),
   settings: Ember.computed.reads('applicationController.model.settings'),
 
+  currencies: Ember.computed('stats.model', {
+    get() {
+      return this.get('stats.model.currencies');
+    }
+  }),
+
+  selectedCurrency: Ember.computed('stats.model', {
+    get() {
+      return this.get('stats.model.selectedCurrency');
+    }
+  }),
+
+  selectedSymbol: Ember.computed('stats.model', {
+    get() {
+      var curr = this.get('stats.model.selectedCurrency', 'USD');
+      return this.get('currencies')[curr];
+    }
+  }),
+
+  coinPrice: Ember.computed('stats.model', {
+    get() {
+      var price = this.get('stats.model.priceInfo');
+      if (price === null) {
+        return '--';
+      }
+      var curr = this.getWithDefault('stats.model.selectedCurrency', 'USD');
+      var selected = price[curr];
+      var symbol = this.get('currencies')[curr];
+      return parseFloat(selected).toFixed(3);
+    }
+  }),
+
+  btcPrice: Ember.computed('stats.model', {
+    get() {
+      var price = this.get('stats.model.priceInfo');
+      if (price === null) {
+        return '--';
+      }
+      var btc = price['BTC'];
+      return parseFloat(btc).toFixed(8);
+    }
+  }),
+  LastBlockFound: Ember.computed('stats', {
+    get() {
+      return this.getWithDefault('stats.model.stats.lastBlockFound');
+    }
+  }),
+
   // try to read some settings from the model.settings
   PayoutThreshold: Ember.computed('settings', {
     get() {
