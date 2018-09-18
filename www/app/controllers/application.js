@@ -104,6 +104,25 @@ export default Ember.Controller.extend({
     }
   }),
 
+  currencies: Ember.computed('model', {
+    get() {
+      return config.APP.currencies;
+    }
+  }),
+
+  selectedCurrency: Ember.computed({
+    get() {
+      var currencies = this.get('currencies');
+      var currency = Ember.$.cookie('currency');
+      for (var i = 0; i < currencies.length; i++) {
+        if (currencies[i].value === currency) {
+          return currencies[i].name;
+        }
+      }
+      return currency;
+    }
+  }),
+
   roundVariance: Ember.computed('model', {
     get() {
       var percent = this.get('model.stats.roundShares') / this.get('difficulty');
