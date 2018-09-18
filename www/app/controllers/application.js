@@ -43,6 +43,14 @@ export default Ember.Controller.extend({
     }
   }),
 
+  blockReward: Ember.computed('model', {
+    get() {
+      var blockReward = this.get('model.blockReward');
+      blockReward = blockReward * 1e-18;
+      return blockReward;
+    }
+  }),
+
   hashrate: Ember.computed('difficulty', {
     get() {
       var blockTime = this.get('blockTime');
