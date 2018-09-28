@@ -1,31 +1,34 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { inject } from '@ember/controller';
+import { computed } from '@ember/object';
+import $ from 'jquery';
 
-export default Ember.Controller.extend({
-  applicationController: Ember.inject.controller('application'),
-  stats: Ember.computed.reads('applicationController'),
-  config: Ember.computed.reads('applicationController.config'),
-  settings: Ember.computed.reads('applicationController.model.settings'),
+export default Controller.extend({
+  applicationController: inject('application'),
+  stats: computed.reads('applicationController'),
+  config: computed.reads('applicationController.config'),
+  settings: computed.reads('applicationController.model.settings'),
 
-  currencies: Ember.computed('stats.model', {
+  currencies: computed('stats.model', {
     get() {
       return this.get('stats.model.currencies');
     }
   }),
 
-  selectedCurrency: Ember.computed('stats.model', {
+  selectedCurrency: computed('stats.model', {
     get() {
       return this.get('stats.model.selectedCurrency');
     }
   }),
 
-  selectedSymbol: Ember.computed('stats.model', {
+  selectedSymbol: computed('stats.model', {
     get() {
       var curr = this.get('stats.model.selectedCurrency', 'USD');
       return this.get('currencies')[curr];
     }
   }),
 
-  coinPrice: Ember.computed('stats.model', {
+  coinPrice: computed('stats.model', {
     get() {
       var price = this.get('stats.model.priceInfo');
       if (price === null) {
@@ -38,7 +41,7 @@ export default Ember.Controller.extend({
     }
   }),
 
-  btcPrice: Ember.computed('stats.model', {
+  btcPrice: computed('stats.model', {
     get() {
       var price = this.get('stats.model.priceInfo');
       if (price === null) {
@@ -48,14 +51,14 @@ export default Ember.Controller.extend({
       return parseFloat(btc).toFixed(8);
     }
   }),
-  LastBlockFound: Ember.computed('stats', {
+  LastBlockFound: computed('stats', {
     get() {
       return this.getWithDefault('stats.model.stats.lastBlockFound');
     }
   }),
 
   // try to read some settings from the model.settings
-  PayoutThreshold: Ember.computed('settings', {
+  PayoutThreshold: computed('settings', {
     get() {
       var threshold = this.get('settings.PayoutThreshold');
       if (threshold) {
@@ -66,7 +69,7 @@ export default Ember.Controller.extend({
     }
   }),
 
-  PayoutInterval: Ember.computed('settings', {
+  PayoutInterval: computed('settings', {
     get() {
       var interval = this.get('settings.PayoutInterval');
       if (interval) {
@@ -76,7 +79,7 @@ export default Ember.Controller.extend({
     }
   }),
 
-  PoolFee: Ember.computed('settings', {
+  PoolFee: computed('settings', {
     get() {
       var poolfee = this.get('settings.PoolFee');
       if (poolfee) {
@@ -86,17 +89,17 @@ export default Ember.Controller.extend({
     }
   }),
 
-	cachedLogin: Ember.computed('login', {
+  cachedLogin: computed('login', {
     get() {
-      return this.get('login') || Ember.$.cookie('login');
+      return this.get('login') || $.cookie('login');
     },
     set(key, value) {
-      Ember.$.cookie('login', value);
+      $.cookie('login', value);
       this.set('model.login', value);
       return value;
     }
   }),
-  chartOptions: Ember.computed("model.hashrate", {
+  chartOptions: computed("model.hashrate", {
         get() {
             var now = new Date();
             var e = this,

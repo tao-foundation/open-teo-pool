@@ -1,7 +1,10 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import EmberObject from '@ember/object';
+import { later } from '@ember/runloop';
+import $ from 'jquery';
 import config from '../config/environment';
 
-export default Ember.Route.extend({
+export default Route.extend({
   minerCharts: null,
   paymentCharts: null,
   chartTimestamp: 0,
@@ -14,7 +17,7 @@ export default Ember.Route.extend({
       charts = null;
     }
     let self = this;
-    return Ember.$.getJSON(url).then(function(data) {
+    return $.getJSON(url).then(function(data) {
       if (!charts) {
         self.set('minerCharts', data.minerCharts);
         self.set('paymentCharts', data.paymentCharts);
@@ -27,7 +30,7 @@ export default Ember.Route.extend({
 
       // reverse payments
       data.payments = data.payments.reverse();
-      return Ember.Object.create(data);
+      return EmberObject.create(data);
     });
 	},
 

@@ -1,12 +1,14 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { inject } from '@ember/controller';
+import { computed } from '@ember/object';
 
-export default Ember.Controller.extend({
-  applicationController: Ember.inject.controller('application'),
-  config: Ember.computed.reads('applicationController.config'),
-  stats: Ember.computed.reads('applicationController.model.stats'),
-  intl: Ember.inject.service(),
+export default Controller.extend({
+  applicationController: inject('application'),
+  config: computed.reads('applicationController.config'),
+  stats: computed.reads('applicationController.model.stats'),
+  intl: inject(),
 
-  chartPaymentText: Ember.computed('model', {
+  chartPaymentText: computed('model', {
     get() {
       var outText = this.get('model.paymentCharts');
       if (!outText) {
@@ -16,7 +18,7 @@ export default Ember.Controller.extend({
     }
   }),
 
-  chartPayment: Ember.computed('intl', 'model.paymentCharts', {
+  chartPayment: computed('intl', 'model.paymentCharts', {
     get() {
         var e = this,
             t = e.getWithDefault("model.paymentCharts"),
