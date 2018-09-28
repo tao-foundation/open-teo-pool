@@ -1,10 +1,12 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import { later } from '@ember/runloop';
+import $ from 'jquery';
 import config from '../config/environment';
 
-export default Ember.Route.extend({
+export default Route.extend({
   model: function() {
-    var url = config.APP.ApiUrl + 'api/miners';
-    return Ember.$.getJSON(url).then(function(data) {
+    let url = config.APP.ApiUrl + 'api/miners';
+    return $.getJSON(url).then(function(data) {
       if (data.miners) {
         // Convert map to array
         data.miners = Object.keys(data.miners).map((value) => {

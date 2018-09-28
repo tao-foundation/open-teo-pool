@@ -1,12 +1,14 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { inject } from '@ember/controller';
+import { computed } from '@ember/object';
 
-export default Ember.Controller.extend({
-  applicationController: Ember.inject.controller('application'),
-  config: Ember.computed.reads('applicationController.config'),
-  netstats: Ember.computed.reads('applicationController'),
-  stats: Ember.computed.reads('applicationController.model.stats'),
+export default Controller.extend({
+  applicationController: inject('application'),
+  config: computed.reads('applicationController.config'),
+  netstats: computed.reads('applicationController'),
+  stats: computed.reads('applicationController.model.stats'),
 
-  chartOptions: Ember.computed("model", {
+  chartOptions: computed("model", {
         get() {
             var now = new Date();
             var e = this,

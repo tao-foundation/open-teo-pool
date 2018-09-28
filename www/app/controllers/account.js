@@ -1,11 +1,14 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { inject } from '@ember/controller';
+import { computed } from '@ember/object';
 
-export default Ember.Controller.extend({
-  applicationController: Ember.inject.controller('application'),
-  config: Ember.computed.reads('applicationController.config'),
-  stats: Ember.computed.reads('applicationController.model.stats'),
-  hashrate: Ember.computed.reads('applicationController.hashrate'),
-  chartOptions: Ember.computed("model.hashrate", {
+export default Controller.extend({
+  applicationController: inject('application'),
+  stats: computed.reads('applicationController.model.stats'),
+  config: computed.reads('applicationController.config'),
+  stats: computed.reads('applicationController.model.stats'),
+  hashrate: computed.reads('applicationController.hashrate'),
+  chartOptions: computed("model.hashrate", {
         get() {
             var e = this,
                 t = e.getWithDefault("model.minerCharts"),
@@ -142,9 +145,10 @@ export default Ember.Controller.extend({
             return a;
         }
     }),
-  roundPercent: Ember.computed('stats', 'model', {
+
+  roundPercent: computed('stats', 'model', {
     get() {
-      var percent = this.get('model.roundShares') / this.get('stats.roundShares');
+      let percent = this.get('model.roundShares') / this.get('stats.roundShares');
       if (!percent) {
         return 0;
       }
@@ -152,13 +156,13 @@ export default Ember.Controller.extend({
     }
   }),
 
-  netHashrate: Ember.computed({
+  netHashrate: computed({
     get() {
       return this.get('hashrate');
     }
   }),
 
-  earnPerDay: Ember.computed('model', {
+  earnPerDay: computed('model', {
     get() {
       return 24 * 60 * 60 / this.get('config').BlockTime * this.get('config').BlockReward *
         this.getWithDefault('model.hashrate') / this.get('hashrate');

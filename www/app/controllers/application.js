@@ -1,15 +1,18 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { inject } from '@ember/controller';
+import $ from 'jquery';
 import config from '../config/environment';
 
-export default Ember.Controller.extend({
-  intl: Ember.inject.service(),
+export default Controller.extend({
+  intl: inject(),
   get config() {
     return config.APP;
   },
 
-  height: Ember.computed('model.nodes', {
+  height: computed('model.nodes', {
     get() {
-      var node = this.get('bestNode');
+      let node = this.get('bestNode');
       if (node) {
         return node.height;
       }
@@ -17,15 +20,15 @@ export default Ember.Controller.extend({
     }
   }),
 
-  roundShares: Ember.computed('model.stats', {
+  roundShares: computed('model.stats', {
     get() {
       return parseInt(this.get('model.stats.roundShares'));
     }
   }),
 
-  difficulty: Ember.computed('model.nodes', {
+  difficulty: computed('model.nodes', {
     get() {
-      var node = this.get('bestNode');
+      let node = this.get('bestNode');
       if (node) {
         return node.difficulty;
       }
@@ -33,7 +36,7 @@ export default Ember.Controller.extend({
     }
   }),
 
-  blockTime: Ember.computed('model.nodes', {
+  blockTime: computed('model.nodes', {
     get() {
       var node = this.get('bestNode');
       if (node && node.blocktime) {
@@ -43,7 +46,7 @@ export default Ember.Controller.extend({
     }
   }),
 
-  blockReward: Ember.computed('model', {
+  blockReward: computed('model', {
     get() {
       var blockReward = this.get('model.blockReward');
       blockReward = blockReward * 1e-18;
@@ -51,22 +54,22 @@ export default Ember.Controller.extend({
     }
   }),
 
-  hashrate: Ember.computed('difficulty', {
+  hashrate: computed('difficulty', {
     get() {
       var blockTime = this.get('blockTime');
       return this.getWithDefault('difficulty', 0) / blockTime;
     }
   }),
 
-  immatureTotal: Ember.computed('model', {
+  immatureTotal: computed('model', {
     get() {
       return this.getWithDefault('model.immatureTotal', 0) + this.getWithDefault('model.candidatesTotal', 0);
     }
   }),
 
-  bestNode: Ember.computed('model.nodes', {
+  bestNode: computed('model.nodes', {
     get() {
-      var node = null;
+      let node = null;
       this.get('model.nodes').forEach(function (n) {
         if (!node) {
           node = n;
@@ -79,22 +82,22 @@ export default Ember.Controller.extend({
     }
   }),
 
-  lastBlockFound: Ember.computed('model', {
+  lastBlockFound: computed('model', {
     get() {
       return parseInt(this.get('model.lastBlockFound')) || 0;
     }
   }),
 
-  languages: Ember.computed('model', {
+  languages: computed('model', {
     get() {
       return this.get('model.languages');
     }
   }),
 
-  selectedLanguage: Ember.computed({
+  selectedLanguage: computed({
     get() {
       var langs = this.get('languages');
-      var lang = Ember.$.cookie('lang');
+      var lang = $.cookie('lang');
       for (var i = 0; i < langs.length; i++) {
         if (langs[i].value == lang) {
           return langs[i].name;
@@ -104,16 +107,16 @@ export default Ember.Controller.extend({
     }
   }),
 
-  currencies: Ember.computed('model', {
+  currencies: computed('model', {
     get() {
       return config.APP.currencies;
     }
   }),
 
-  selectedCurrency: Ember.computed({
+  selectedCurrency: computed({
     get() {
       var currencies = this.get('currencies');
-      var currency = Ember.$.cookie('currency');
+      var currency = $.cookie('currency');
       for (var i = 0; i < currencies.length; i++) {
         if (currencies[i].value === currency) {
           return currencies[i].name;
@@ -123,9 +126,9 @@ export default Ember.Controller.extend({
     }
   }),
 
-  roundVariance: Ember.computed('model', {
+  roundVariance: computed('model', {
     get() {
-      var percent = this.get('model.stats.roundShares') / this.get('difficulty');
+      let percent = this.get('model.stats.roundShares') / this.get('difficulty');
       if (!percent) {
         return 0;
       }
@@ -133,9 +136,9 @@ export default Ember.Controller.extend({
     }
   }),
 
-  nextEpoch: Ember.computed('height', {
+  nextEpoch: computed('height', {
     get() {
-      var epochOffset = (30000 - (this.getWithDefault('height', 1) % 30000)) * 1000 * this.get('config').BlockTime;
+      let epochOffset = (30000 - (this.getWithDefault('height', 1) % 30000)) * 1000 * this.get('config').BlockTime;
       return Date.now() + epochOffset;
     }
   })

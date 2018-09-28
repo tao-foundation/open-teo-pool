@@ -1,4 +1,8 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import EmberObject from '@ember/object';
+import { inject } from '@ember/service';
+import { later } from '@ember/runloop';
+import $ from 'jquery';
 import config from '../config/environment';
 
 function selectLocale(selected) {
@@ -25,8 +29,8 @@ function selectLocale(selected) {
   return locale;
 }
 
-export default Ember.Route.extend({
-  intl: Ember.inject.service(),
+export default Route.extend({
+  intl: inject(),
   selectedLanguage: null,
   languages: null,
   poolSettings: null,
@@ -41,17 +45,17 @@ export default Ember.Route.extend({
     let locale = this.get('selectedLanguage');
     if (!locale) {
       // read cookie
-      locale = Ember.$.cookie('lang');
+      locale = $.cookie('lang');
       // pick a locale
       locale = selectLocale(locale);
 
       this.get('intl').setLocale(locale);
-      Ember.$.cookie('lang', locale);
+      $.cookie('lang', locale);
       console.log('INFO: locale selected - ' + locale);
       this.set('selectedLanguage', locale);
 
       // read currency cookie
-      let curr = Ember.$.cookie('currency');
+      let curr = $.cookie('currency');
       // or read default currency
       curr = curr ? curr : config.APP.defaultCurrencies[locale.substr(0, 2)];
       if (Object.values(config.APP.defaultCurrencies).indexOf(curr) > -1) {
@@ -71,14 +75,14 @@ export default Ember.Route.extend({
     if (!settings) {
       let self = this;
       let url = config.APP.ApiUrl + 'api/settings';
-      Ember.$.ajax({
+      $.ajax({
         url: url,
         type: 'GET',
         header: {
           'Accept': 'application/json'
         },
         success: function(data) {
-          settings = Ember.Object.create(data);
+          settings = EmberObject.create(data);
           self.set('poolSettings', settings);
           console.log('INFO: pool settings loaded..');
         },
@@ -95,8 +99,8 @@ export default Ember.Route.extend({
       let self = this;
       let url = config.APP.priceApiUrl;
 
-      Ember.$.getJSON(url).then(function(data) {
-          price = Ember.Object.create(data);
+      $.getJSON(url).then(function(data) {
+          price = EmberObject.create(data);
           self.set('priceInfo', price);
           self.set('priceTimestamp', new Date().getTime());
           console.log('INFO: price info loaded..');
@@ -114,11 +118,11 @@ export default Ember.Route.extend({
       let locale = selectLocale(selected);
       this.get('intl').setLocale(locale);
       this.set('selectedLanguage', locale);
-      Ember.$.cookie('lang', locale);
+      $.cookie('lang', locale);
       let languages = this.get('languages');
       for (var i = 0; i < languages.length; i++) {
         if (languages[i].value == locale) {
-          Ember.$('#selectedLanguage').html(languages[i].name + '<b class="caret"></b>');
+          $('#selectedLanguage').html(languages[i].name + '<b class="caret"></b>');
           break;
         }
       }
@@ -131,19 +135,19 @@ export default Ember.Route.extend({
       if (typeof currency === 'undefined') {
         return true;
       }
-      Ember.$.cookie('currency', currency);
+      $.cookie('currency', currency);
       let currencies = Object.keys(config.APP.currencies);
       for (var i = 0; i < currencies.length; i++) {
         if (currencies[i] === currency) {
           var symbol = config.APP.currencies[currency];
-          Ember.$('#selectedCurrency').html(symbol + '<b class="caret"></b>');
+          $('#selectedCurrency').html(symbol + '<b class="caret"></b>');
           var price = this.get('priceInfo');
           if (price && price[currency]) {
             currency = price[currency];
             var parsed = parseFloat(currency).toFixed(3);
-            Ember.$('#currentPrice').html(parsed);
+            $('#currentPrice').html(parsed);
           } else {
-            Ember.$('#currentPrice').html('--');
+            $('#currentPrice').html('--');
           }
           break;
         }
@@ -153,26 +157,26 @@ export default Ember.Route.extend({
     },
 
     toggleMenu: function() {
-      Ember.$('.navbar-collapse.in').attr("aria-expanded", false).removeClass("in");
+      $('.navbar-collapse.in').attr("aria-expanded", false).removeClass("in");
     }
   },
 
 	model: function() {
-    var url = config.APP.ApiUrl + 'api/stats';
+    let url = config.APP.ApiUrl + 'api/stats';
     let charts = this.get('poolCharts');
     if (!charts || new Date().getTime() - this.getWithDefault('chartTimestamp', 0) > (config.APP.highcharts.main.chartInterval || 900000 /* 15 min */)) {
       url += '/chart';
       charts = null;
     }
     let self = this;
-    return Ember.$.getJSON(url).then(function(data) {
+    return $.getJSON(url).then(function(data) {
       if (!charts) {
         self.set('poolCharts', data.poolCharts);
         self.set('chartTimestamp', new Date().getTime());
       } else {
         data.poolCharts = self.get('poolCharts');
       }
-      return Ember.Object.create(data);
+      return EmberObject.create(data);
     });
 	},
 
@@ -184,6 +188,6 @@ export default Ember.Route.extend({
     model.selectedCurrency = this.get('selectedCurrency');
     model.priceInfo = this.get('priceInfo');
     this._super(controller, model);
-    Ember.run.later(this, this.refresh, 5000);
+    later(this, this.refresh, 5000);
   }
 });

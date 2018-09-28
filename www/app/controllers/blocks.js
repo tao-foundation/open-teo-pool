@@ -1,11 +1,14 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { inject } from '@ember/controller';
+import { computed } from '@ember/object';
+import $ from 'jquery';
 
-export default Ember.Controller.extend({
-  applicationController: Ember.inject.controller('application'),
-  config: Ember.computed.reads('applicationController.config'),
-  settings: Ember.computed.reads('applicationController.model.settings'),
+export default Controller.extend({
+  applicationController: inject('application'),
+  config: computed.reads('applicationController.config'),
+  settings: computed.reads('applicationController.model.settings'),
 
-  BlockUnlockDepth: Ember.computed('settings', {
+  BlockUnlockDepth: computed('settings', {
     get() {
       var depth = this.get('settings.BlockUnlockDepth');
       if (depth) {
@@ -15,7 +18,7 @@ export default Ember.Controller.extend({
     }
   }),
 
-  chartOptions: Ember.computed("model.luckCharts", {
+  chartOptions: computed("model.luckCharts", {
         get() {
             var e = this,
                 t = e.getWithDefault("model.luckCharts"),
