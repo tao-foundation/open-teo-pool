@@ -38,7 +38,7 @@ export default Ember.Controller.extend({
                                 t.forEach(function(d) {
                                     var r = new Date(1000 * d.x);
                                     var l = r.toLocaleString();
-                                    var n = e.amount / 1000000000;
+                                    var n = d.amount / 1000000000;
                                     data.push({x: r, d: l, y: n});
                                 });
                                 self.series[0].setData(data, true, {}, true);
