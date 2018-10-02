@@ -101,7 +101,9 @@ func (s *ProxyServer) handleSubmitRPC(cs *Session, login, id string, params []st
 				return
 			}
 		}
-		log.Printf("Valid share from %s@%s", login, cs.ip)
+		if s.config.Proxy.Debug {
+			log.Printf("Valid share from %s@%s", login, cs.ip)
+		}
 
 		if !ok {
 			cs.lastErr = errors.New("High rate of invalid shares")
