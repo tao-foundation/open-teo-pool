@@ -22,7 +22,7 @@ export default Controller.extend({
   chartPayment: computed('intl', 'model.paymentCharts', {
     get() {
         var e = this,
-            t = e.getWithDefault("model.paymentCharts"),
+            t = e.getWithDefault("model.paymentCharts", []),
             a = {
                 chart: {
                     backgroundColor: "rgba(255, 255, 255, 0.1)",
@@ -32,11 +32,12 @@ export default Controller.extend({
                     events: {
                         load: function() {
                             var self = this;
-                            setInterval(function() {
+                            var chartInterval = setInterval(function() {
                                 if (!self.series) {
-                                    return; // FIXME
+                                    clearInterval(chartInterval);
+                                    return;
                                 }
-                                t = e.getWithDefault("model.paymentCharts");
+                                t = e.getWithDefault("model.paymentCharts", []);
                                 var data = [];
                                 t.forEach(function(d) {
                                     var r = new Date(1000 * d.x);
@@ -44,7 +45,9 @@ export default Controller.extend({
                                     var n = d.amount / 1000000000;
                                     data.push({x: r, d: l, y: n});
                                 });
-                                self.series[0].setData(data, true, {}, true);
+                                if (data.length > 0) {
+                                    self.series[0].setData(data, true, {}, true);
+                                }
                             }, e.get('config.highcharts.account.paymentInterval') || 120000);
                         }
                     }
