@@ -1,9 +1,85 @@
+{{#if config.newStyle}}
+<section class="status">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 info-holder">
+        <div class="item">
+          <div class="desc">
+            <h3>{{t "home.min_payout_threshold"}}</h3>
+            <p>
+              {{PayoutThreshold}} {{config.Unit}}
+            </p>
+          </div>
+        </div>
+        <div class="item">
+          <div class="desc">
+            <h3>Tx Fee</h3>
+            <p>
+              {{#unless settings.KeepTxFee}}
+              0 Gas Fee
+              {{else}}
+              Only gas fee
+              {{/unless}}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-paper-plane-o"></i>
+          </div>
+          <div class="number">
+            <h3>{{t "payments.total_payments_sent"}}</h3>
+            <div>
+              <span>{{format-number model.paymentsTotal fallback='0'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-btc"></i>
+          </div>
+          <div class="number">
+            <h3>Total Paid Amount ({{config.Unit}})</h3>
+            <div>
+              <span>{{format-number PaymentsAmount fallback='0'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-calculator"></i>
+          </div>
+          <div class="number">
+            <h3>Earn per day ({{config.Unit}}/1GH)</h3>
+            <div>
+              <span>{{format-number earnPerDay}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{{else}}
 <div class="jumbotron">
   <div class="container">
+    {{#unless settings.KeepTxFee}}
     <p class="lead">{{t "payments.pay_tx"}}</p>
+    {{/unless}}
     <strong>{{t "payments.total_payments_sent"}}:</strong> <span class="label label-info">{{model.paymentsTotal}}</span>
   </div>
 </div>
+{{/if}}
 <div class="container">
   {{#if model.payments}}
   <h3>{{t "payments.latest_payouts"}}</h3>

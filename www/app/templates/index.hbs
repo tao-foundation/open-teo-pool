@@ -1,3 +1,230 @@
+{{#if config.newMain}}
+<section class="status">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-cube"></i>
+          </div>
+          <div class="number">
+            <h3>Block Height</h3>
+            <div>
+              <span>#{{format-number stats.height}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-hourglass-half"></i>
+          </div>
+          <div class="number">
+            <h3>Block Time</h3>
+            <div>
+              <span>{{format-number stats.blockTime}} s</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-tachometer"></i>
+          </div>
+          <div class="number">
+            <h3>Net Hashrate</h3>
+            <div>
+              <span>{{format-hashrate stats.hashrate}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-puzzle-piece"></i>
+          </div>
+          <div class="number">
+            <h3>Difficulty</h3>
+            <div>
+              <span>{{with-metric-prefix stats.difficulty}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-users"></i>
+          </div>
+          <div class="number">
+            <h3>Miners</h3>
+            <div>
+              <span>{{format-number stats.model.minersTotal}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-clock-o"></i>
+          </div>
+          <div class="number">
+            <h3>Last Found</h3>
+            <div>
+              {{#if stats.model.stats.lastBlockFound}}
+              <span>{{seconds-to-rel stats.model.stats.lastBlockFound}}</span>
+              {{else}}
+              <span>no block found</span>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-tachometer"></i>
+          </div>
+          <div class="number">
+            <h3>Pool Hashrate</h3>
+            <div>
+              <span>{{format-hashrate stats.model.hashrate}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-percent"></i>
+          </div>
+          <div class="number">
+            <h3>Round Luck</h3>
+            <div>
+              <span>{{format-number stats.roundVariance style='percent'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 info-holder">
+        <div class="item">
+          <div class="desc">
+            <h3>Block Reward</h3>
+            <p>
+              {{format-number stats.blockReward}} {{config.Unit}}
+            </p>
+          </div>
+        </div>
+        <div class="item">
+          <div class="desc">
+            <h3>Pool Fee</h3>
+            <p>
+              {{PoolFee}}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 info-holder">
+        <div class="item">
+          <div class="desc">
+            <h3>{{t "home.min_payout_threshold"}}</h3>
+            <p>
+              {{PayoutThreshold}} {{config.Unit}}
+            </p>
+          </div>
+        </div>
+        <div class="item">
+          <div class="desc">
+            <h3>Payout interval</h3>
+            <p>
+              {{PayoutInterval}}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 info-holder">
+        <div class="item0">
+          <div class="icon">
+            <h3 class="label label-success">PROP</h3>
+          </div>
+          <div class="desc">
+            <p>
+              {{t "home.payout_scheme_detail"}}
+            </p>
+          </div>
+        </div>
+      </div>
+
+{{#if config.priceShowAll}}
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 info-holder">
+        <div class="item">
+          <div class="desc">
+            <h3>
+            <span class="icon">
+              <i class="fa fa-bitcoin"></i>
+            </span>
+            price</h3>
+            <p>
+              {{format-number satPrice}} sat
+            </p>
+          </div>
+        </div>
+        <div class="item">
+          <div class="desc">
+            <h3>Price</h3>
+            <p>
+              <span id="currentPrice">{{coinPrice}}</span>
+              <ul class="currency">
+                <li>
+                  <a class="currency-item dropdown-toggle" data-toggle="dropdown" id="selectedCurrency">
+                  {{selectedSymbol}}
+                  <b class="caret"></b></a>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    {{#each-in currencies as |currency symbol|}}
+                    <li><a href="#" {{action 'selectCurrency' currency on='click'}}>{{currency}} ({{symbol}})</a></li>
+                    {{/each-in}}
+                  </ul>
+                </li>
+              </ul>
+            </p>
+          </div>
+        </div>
+      </div>
+{{/if}}
+{{#if config.priceShowBtc}}
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-bitcoin"></i>
+          </div>
+          <div class="number">
+            <h3>Price</h3>
+            <div>
+              <span>{{format-number satPrice}} sat</span>
+            </div>
+          </div>
+        </div>
+      </div>
+{{/if}}
+    </div>
+  </div>
+</section>
+{{/if}}
+{{#if config.legacyMain}}
 <div class="jumbotron">
   <div class="container">
     <div class="row">
@@ -25,11 +252,13 @@
     </div>
   </div>
 </div>
-
+{{/if}}
 {{#if config.highcharts.main.enabled}}
-<div class="container">
+<section class="main-chart">
+  <div class="container">
   {{high-charts mode=chartMode chartOptions=chartOptions content=chartData}}
-</div>
+  </div>
+</section>
 {{/if}}
 
 <div class="container">

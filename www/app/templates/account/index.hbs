@@ -1,6 +1,8 @@
 <div class="container">
 {{#if config.highcharts.account.enabled}}
+  {{#unless config.highcharts.account.main}}
   {{high-charts mode=chartMode chartOptions=chartOptions content=chartData}}
+  {{/unless}}
 {{/if}}
   {{#if model.workers}}
   <h3>{{t "account.your_workers"}}</h3>
