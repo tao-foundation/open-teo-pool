@@ -1,7 +1,6 @@
 import Controller from '@ember/controller';
 import { inject } from '@ember/controller';
 import { computed } from '@ember/object';
-import $ from 'jquery';
 
 export default Controller.extend({
   applicationController: inject('application'),
@@ -27,7 +26,7 @@ export default Controller.extend({
                             '#ff0066', '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
                     chart: {
                         backgroundColor: "rgba(255, 255, 255, 0.1)",
-                        marginRight: 10,
+                        marginRight: 100,
                         height: 200,
                         events: {
                             load: function() {
