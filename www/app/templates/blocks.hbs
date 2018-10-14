@@ -1,3 +1,66 @@
+{{#if config.newStyle}}
+<section class="status">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-cube"></i>
+          </div>
+          <div class="number">
+            <h3>Block Height</h3>
+            <div>
+              <span>#{{format-number stats.height}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-cubes"></i>
+          </div>
+          <div class="number">
+            <h3>{{t "account.blocks.found"}}</h3>
+            <div>
+              <span>{{format-number model.maturedTotal fallback='0'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-tachometer"></i>
+          </div>
+          <div class="number">
+            <h3>Network Hashrate</h3>
+            <div>
+              <span>{{format-hashrate stats.hashrate}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-puzzle-piece"></i>
+          </div>
+          <div class="number">
+            <h3>Difficulty</h3>
+            <div>
+              <span>{{with-metric-prefix stats.difficulty}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{{else}}
 <div class="jumbotron">
   <div class="container">
     <p class="lead">{{t "block.pool_rewards"}}</p>
@@ -6,6 +69,7 @@
     </span>
   </div>
 </div>
+{{/if}}
 <div class="container">
   {{high-charts mode=stockChart chartOptions=chartOptions content=chartData}}
   {{#if model.luck}}

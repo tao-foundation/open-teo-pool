@@ -1,4 +1,243 @@
 {{outlet 'error' }}
+{{#if config.newStyle}}
+<section class="status">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-cube"></i>
+          </div>
+          <div class="number">
+            <h3>Block Height</h3>
+            <div>
+              <span>#{{format-number stats.height}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-hourglass-half"></i>
+          </div>
+          <div class="number">
+            <h3>Block Time</h3>
+            <div>
+              <span>{{format-number stats.blockTime}} s</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-tachometer"></i>
+          </div>
+          <div class="number">
+            <h3>Net Hashrate</h3>
+            <div>
+              <span>{{format-hashrate stats.hashrate}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-puzzle-piece"></i>
+          </div>
+          <div class="number">
+            <h3>Difficulty</h3>
+            <div>
+              <span>{{with-metric-prefix stats.difficulty}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-users"></i>
+          </div>
+          <div class="number">
+            <h3>{{t "account.online"}}</h3>
+            <div>
+              <span>{{format-number model.workersOnline}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-clock-o"></i>
+          </div>
+          <div class="number">
+            <h3>Last Share</h3>
+            <div>
+              <span>{{seconds-to-rel model.stats.lastShare}} ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-tachometer"></i>
+          </div>
+          <div class="number">
+            <h3>Hashrate (30m)</h3>
+            <div>
+              <span>{{format-hashrate model.currentHashrate}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-tachometer"></i>
+          </div>
+          <div class="number">
+            <h3>Hashrate (3h)</h3>
+            <div>
+              <span>{{format-hashrate model.hashrate}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-cubes"></i>
+          </div>
+          <div class="number">
+            <h3>{{t "account.blocks.found"}}</h3>
+            <div>
+              <span>{{format-number model.stats.blocksFound fallback='0'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-paper-plane-o"></i>
+          </div>
+          <div class="number">
+            <h3>{{t "account.total.payments"}}</h3>
+            <div>
+              <span>{{format-number model.paymentsTotal}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-percent"></i>
+          </div>
+          <div class="number">
+            <h3>Your Round Share</h3>
+            <div>
+              <span>{{format-number roundPercent style='percent' maximumFractionDigits='3'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-hourglass"></i>
+          </div>
+          <div class="number">
+            <h3>{{t "account.epoch_switch"}}</h3>
+            <div>
+              <span>{{format-relative applicationController.nextEpoch}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-cloud"></i>
+          </div>
+          <div class="number">
+            <h3>{{t "account.immature.balance"}}</h3>
+            <div>
+              <span>{{format-balance model.stats.immature 5}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+{{#if model.stats.pending}}
+          <div class="icon">
+            <i class="fa fa-clock-o"></i>
+          </div>
+          <div class="number">
+            <h3>{{t "account.current"}}</h3>
+            <div>
+              <span>{{format-balance model.stats.pending 5}}</span>
+            </div>
+          </div>
+{{else}}
+          <div class="icon">
+            <i class="fa fa-bank"></i>
+          </div>
+          <div class="number">
+            <h3>{{t "account.pending.balance"}}</h3>
+            <div>
+              <span>{{format-balance model.stats.balance 5}}</span>
+            </div>
+          </div>
+{{/if}}
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-btc"></i>
+          </div>
+          <div class="number">
+            <h3>{{t "account.total.paid"}} ({{config.Unit}})</h3>
+            <div>
+              <span>{{format-balance model.stats.paid 5}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 stat-holder">
+        <div class="display">
+          <div class="icon">
+            <i class="fa fa-calculator"></i>
+          </div>
+          <div class="number">
+            <h3>{{t "account.earnings.perday"}} ({{config.Unit}})</h3>
+            <div>
+              <span>{{format-number earnPerDay}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{{else}}
 <div class="jumbotron">
   <div class="container">
     <div class="row">
@@ -44,8 +283,15 @@
     </div>
   </div>
 </div>
+{{/if}}
 
 <div class="container">
+
+{{#if config.highcharts.account.enabled}}
+  {{#if config.highcharts.account.main}}
+{{high-charts mode=chartMode chartOptions=chartOptions content=chartData}}
+  {{/if}}
+{{/if}}
 
   <ul class="nav nav-tabs">
     {{#active-li currentWhen='account.index' role='presentation'}}
