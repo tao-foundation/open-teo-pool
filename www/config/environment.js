@@ -99,6 +99,8 @@ module.exports = function(environment) {
           chartInterval: 900000
         }
       },
+      copyright: '',
+      poweredBy: '<br /> <strong>Modified source code</strong> <a href="https://github.com/OpenCommunityCoin/open-ethereum-pool" target="_blank">open-ethereum-pool @ OpenCommunityCoin</a><br />',
       currencies: { CNY: '¥', JPY: '¥', KRW: '₩', USD: '$', EUR: '€' },
       defaultCurrencies: {
         en: 'USD',
