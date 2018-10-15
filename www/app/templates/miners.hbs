@@ -8,7 +8,7 @@
             <i class="fa fa-users"></i>
           </div>
           <div class="number">
-            <h3>Online Miners</h3>
+            <h3>{{t "miners.online_miners"}}</h3>
             <div>
               <span>{{format-number model.minersTotal}}</span>
             </div>
@@ -22,7 +22,7 @@
             <i class="fa fa-tachometer"></i>
           </div>
           <div class="number">
-            <h3>Pool Hashrate</h3>
+            <h3>{{t "home.pool_hashrate"}}</h3>
             <div>
               <span>{{format-hashrate stats.model.hashrate}}</span>
             </div>
@@ -36,7 +36,7 @@
             <i class="fa fa-tachometer"></i>
           </div>
           <div class="number">
-            <h3>Net Hashrate</h3>
+            <h3>{{t "home.network_hashrate"}}</h3>
             <div>
               <span>{{format-hashrate stats.hashrate}}</span>
             </div>
@@ -50,7 +50,7 @@
             <i class="fa fa-puzzle-piece"></i>
           </div>
           <div class="number">
-            <h3>Difficulty</h3>
+            <h3>{{t "home.difficulty"}}</h3>
             <div>
               <span>{{with-metric-prefix stats.difficulty}}</span>
             </div>

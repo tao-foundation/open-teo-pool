@@ -30,9 +30,20 @@ home:
   pool_fee: 수수료
   last_block_found: 마지막 발견 블록
   network_difficulty: 네트워크 난이도
-  network_hashrate: 네트워크 총해시
+  network_hashrate: 네트워크 해시
   blockchain_height: 블록체인 높이
   current_round_variance: 라운드 쉐어 분산도
+  miners: 마이너
+  nethash: 넷해시
+  blockheight: 블록 높이
+  blocktime: 블록 타임
+  blockreward: 블록 보상
+  difficulty: 난이도
+  round_luck: 라운드 Luck
+  no_block_found: 찾지 못함
+  lastfound: 마지막 발견
+  payout_interval: 지급 간격
+  price: 가격
 
   query_history: 채굴현황 및 지급내역 조회하기
   input:
@@ -67,6 +78,10 @@ account:
   epoch_switch: 에폭 전환
   workers: 워커현황
   payouts: 출금내역
+  lastshare: 마지막 쉐어
+  hashrate_30m: 해시 (30분)
+  hashrate_3h: 해시 (3시간)
+  your_round_share: 라운드 쉐어
 
   your_workers: 워커 목록
   last_share: 마지막 쉐어
@@ -119,10 +134,15 @@ payments:
   address: 주소
   txid: 전송 ID
   no_payouts_yet: 출금이 아직 없습니다
+  txfee: 전송료
+  total_paid_amount: 전체 출금액
+  earn_per_day: 하루 채굴 예상
+  no_gas_fee: 0 가스료
 
 miners:
   total_hashrate: 전체 풀 해시
   total_miners: 접속중인 마이너
+  online_miners: 접속 마이너
   login: 계정/지갑주소
   hashrate: 해시량
   last_beat: 최근 작동시간
