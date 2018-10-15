@@ -8,7 +8,7 @@
             <i class="fa fa-cube"></i>
           </div>
           <div class="number">
-            <h3>Block Height</h3>
+            <h3>{{t "home.blockheight"}}</h3>
             <div>
               <span>#{{format-number stats.height}}</span>
             </div>
@@ -22,7 +22,7 @@
             <i class="fa fa-hourglass-half"></i>
           </div>
           <div class="number">
-            <h3>Block Time</h3>
+            <h3>{{t "home.blocktime"}}</h3>
             <div>
               <span>{{format-number stats.blockTime}} s</span>
             </div>
@@ -36,7 +36,7 @@
             <i class="fa fa-tachometer"></i>
           </div>
           <div class="number">
-            <h3>Net Hashrate</h3>
+            <h3>{{t "home.network_hashrate"}}</h3>
             <div>
               <span>{{format-hashrate stats.hashrate}}</span>
             </div>
@@ -50,7 +50,7 @@
             <i class="fa fa-puzzle-piece"></i>
           </div>
           <div class="number">
-            <h3>Difficulty</h3>
+            <h3>{{t "home.difficulty"}}</h3>
             <div>
               <span>{{with-metric-prefix stats.difficulty}}</span>
             </div>
@@ -64,7 +64,7 @@
             <i class="fa fa-users"></i>
           </div>
           <div class="number">
-            <h3>Miners</h3>
+            <h3>{{t "home.miners"}}</h3>
             <div>
               <span>{{format-number stats.model.minersTotal}}</span>
             </div>
@@ -78,12 +78,12 @@
             <i class="fa fa-clock-o"></i>
           </div>
           <div class="number">
-            <h3>Last Found</h3>
+            <h3>{{t "home.lastfound"}}</h3>
             <div>
               {{#if stats.model.stats.lastBlockFound}}
               <span>{{seconds-to-rel stats.model.stats.lastBlockFound}}</span>
               {{else}}
-              <span>no block found</span>
+              <span>{{t "home.no_block_found"}}</span>
               {{/if}}
             </div>
           </div>
@@ -96,7 +96,7 @@
             <i class="fa fa-tachometer"></i>
           </div>
           <div class="number">
-            <h3>Pool Hashrate</h3>
+            <h3>{{t "home.pool_hashrate"}}</h3>
             <div>
               <span>{{format-hashrate stats.model.hashrate}}</span>
             </div>
@@ -110,7 +110,7 @@
             <i class="fa fa-percent"></i>
           </div>
           <div class="number">
-            <h3>Round Luck</h3>
+            <h3>{{t "home.round_luck"}}</h3>
             <div>
               <span>{{format-number stats.roundVariance style='percent'}}</span>
             </div>
@@ -121,7 +121,7 @@
       <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 info-holder">
         <div class="item">
           <div class="desc">
-            <h3>Block Reward</h3>
+            <h3>{{t "home.blockreward"}}</h3>
             <p>
               {{format-number stats.blockReward}} {{config.Unit}}
             </p>
@@ -129,7 +129,7 @@
         </div>
         <div class="item">
           <div class="desc">
-            <h3>Pool Fee</h3>
+            <h3>{{t "home.pool_fee"}}</h3>
             <p>
               {{PoolFee}}
             </p>
@@ -148,7 +148,7 @@
         </div>
         <div class="item">
           <div class="desc">
-            <h3>Payout interval</h3>
+            <h3>{{t "home.payout_interval"}}</h3>
             <p>
               {{PayoutInterval}}
             </p>
@@ -177,7 +177,7 @@
             <span class="icon">
               <i class="fa fa-bitcoin"></i>
             </span>
-            price</h3>
+            {{t "home.price"}}</h3>
             <p>
               {{format-number satPrice}} sat
             </p>
@@ -185,7 +185,7 @@
         </div>
         <div class="item">
           <div class="desc">
-            <h3>Price</h3>
+            <h3>{{t "home.price"}}</h3>
             <p>
               <span id="currentPrice">{{coinPrice}}</span>
               <ul class="currency">
@@ -212,7 +212,7 @@
             <i class="fa fa-bitcoin"></i>
           </div>
           <div class="number">
-            <h3>Price</h3>
+            <h3>{{t "home.price"}}</h3>
             <div>
               <span>{{format-number satPrice}} sat</span>
             </div>

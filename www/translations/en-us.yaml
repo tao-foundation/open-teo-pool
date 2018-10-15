@@ -26,13 +26,23 @@ home:
   payouts_run: Payouts run every {interval}.
   payout_scheme_detail: Stable and profitable pool with regular payouts.
   miners_online: Miners Online
-  pool_hashrate: Pool Hash Rate
+  pool_hashrate: Pool HashRate
   pool_fee: Pool Fee
   last_block_found: Last Block Found
   network_difficulty: Network Difficulty
-  network_hashrate: Network Hash Rate
+  network_hashrate: Network Hashrate
   blockchain_height: Blockchain Height
   current_round_variance: Current Round Variance
+  miners: Miners
+  blockheight: Block Height
+  blocktime: Block Time
+  blockreward: Block Reward
+  difficulty: Difficulty
+  round_luck: Round Luck
+  no_block_found: not found
+  lastfound: Last Found
+  payout_interval: Payout Interval
+  price: Price
 
   query_history: Your Stats and Payment History
   input:
@@ -68,6 +78,10 @@ account:
   epoch_switch: Epoch Switch
   workers: Workers
   payouts: Payouts
+  lastshare: Last Share
+  hashrate_30m: Hashrate (30m)
+  hashrate_3h: Hashrate (3h)
+  your_round_share: Your Round Share
 
   your_workers: Workers
   last_share: Last Share
@@ -120,10 +134,15 @@ payments:
   address: Address
   txid: Tx ID
   no_payouts_yet: No payouts yet
+  txfee: Tx Fee
+  total_paid_amount: Total Paid Amount
+  earn_per_day: Earn Per Day
+  no_gas_fee: 0 Gas Fee
 
 miners:
   total_hashrate: Total pool hashrate
   total_miners: Total miners
+  online_miners: Online Miners
   login: Login
   hashrate: Hashrate
   last_beat: Last beat

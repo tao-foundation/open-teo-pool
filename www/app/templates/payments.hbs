@@ -13,10 +13,10 @@
         </div>
         <div class="item">
           <div class="desc">
-            <h3>Tx Fee</h3>
+            <h3>{{t "payments.txfee"}}</h3>
             <p>
               {{#unless settings.KeepTxFee}}
-              0 Gas Fee
+              {{t "payments.no_gas_fee"}}
               {{else}}
               Only gas fee
               {{/unless}}
@@ -45,7 +45,7 @@
             <i class="fa fa-btc"></i>
           </div>
           <div class="number">
-            <h3>Total Paid Amount ({{config.Unit}})</h3>
+            <h3>{{t "payments.total_paid_amount"}} ({{config.Unit}})</h3>
             <div>
               <span>{{format-number PaymentsAmount fallback='0'}}</span>
             </div>
@@ -59,7 +59,7 @@
             <i class="fa fa-calculator"></i>
           </div>
           <div class="number">
-            <h3>Earn per day ({{config.Unit}}/1GH)</h3>
+            <h3>{{t "payments.earn_per_day"}} ({{config.Unit}}/1GH)</h3>
             <div>
               <span>{{format-number earnPerDay}}</span>
             </div>
