@@ -22,6 +22,7 @@ lang:
 
 home:
   min_payout_threshold: 최소 지급량
+  min_payout_threshold_html: 최소 지급량
   payouts_run: 지급은 매 {interval} 간격으로 이루어집니다.
   payout_scheme_detail: 정기적인 지급으로 안정적이고 수익성있는 풀입니다.
   miners_online: 접속된 마이너
