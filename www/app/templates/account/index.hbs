@@ -35,7 +35,7 @@
   {{/if}}
   <div class="alert alert-info" role="alert">
     <span class="sr-only">{{t "account.notice"}}:</span>
-    {{format-html-message "account.notice_html"}}
+    {{t "account.notice_html" htmlSafe=true}}
   </div>
   <div class="alert alert-info" role="alert">
     <strong>{{t "account.json_api_url"}}:</strong> <a href="{{config.ApiUrl}}api/accounts/{{model.login}}">/api/accounts/{{model.login}}</a>
