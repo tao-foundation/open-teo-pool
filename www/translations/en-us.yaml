@@ -22,6 +22,7 @@ lang:
 
 home:
   min_payout_threshold: Min. payout threshold
+  min_payout_threshold_html: Min. payout <span class="hidden-xs">threshold</span>
   payouts_run: Payouts run every {interval}.
   payout_scheme_detail: Stable and profitable pool with regular payouts.
   miners_online: Miners Online
