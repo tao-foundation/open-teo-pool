@@ -11,7 +11,7 @@ export default Controller.extend({
         get() {
             var now = new Date();
             var e = this,
-                t = e.getWithDefault("model.minerCharts"),
+                t = e.getWithDefault("model.minerCharts", []),
                 a = {
                     chart: {
                         backgroundColor: "rgba(255, 255, 255, 0.1)",
@@ -29,13 +29,20 @@ export default Controller.extend({
                                     }
                                     var now = new Date();
                                     var shift = false;
-                                    if (series && series[0] && series[0].data && series[0].data[0] && now - series[0].data[0].x > 6*60*60*1000) {
+                                    if (series[0] && series[0].data.length > 2 && now - series[0].data[0].x > 18*60*60*1000) {
+                                        // show 18 hours ~ 15(min) * 74(points) ~ minerChartsNum: 74, minerCharts: "0 */15 ..."
                                         shift = true;
+                                    }
+                                    // check latest added temporary point and remove tempory added point for less than 5 minutes
+                                    if (series[0] && series[0].data.length > 1 &&
+                                            series[0].data[series[0].data.length - 1].x - series[0].data[series[0].data.length - 2].x < 5*60*1000) {
+                                        series[0].removePoint(series[0].data.length - 1, false, false);
+                                        series[1].removePoint(series[1].data.length - 1, false, false);
                                     }
                                     var y = e.getWithDefault("model.hashrate"),
                                         z = e.getWithDefault("model.currentHashrate");
                                     var d = now.toLocaleString();
-                                    self.series[0].addPoint({x: now, y: y, d: d}, true, shift);
+                                    self.series[0].addPoint({x: now, y: y, d: d}, false, shift);
                                     self.series[1].addPoint({x: now, y: z, d: d}, true, shift);
                                 }, e.get('config.highcharts.account.interval') || 120000);
                             }
