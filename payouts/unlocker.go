@@ -36,10 +36,6 @@ var (
 	TEOReward = new(big.Int).Mul(big.NewInt(5), big.NewInt(1e+18))
 )
 
-// Donate 50% from pool fees to developers
-const donationFee = 50.0
-const donationAccount = "0xeB3EfeC9a30892a1b67a4A7E72AFcE55138cD2cF"
-
 type BlockUnlocker struct {
 	config   *UnlockerConfig
 	backend  *storage.RedisClient
@@ -468,11 +464,6 @@ func (u *BlockUnlocker) calculateRewards(block *storage.BlockData) (*big.Rat, *b
 		poolProfit.Add(poolProfit, extraReward)
 		revenue.Add(revenue, extraReward)
 	}
-
-	var donation = new(big.Rat)
-	poolProfit, donation = chargeFee(poolProfit, donationFee)
-	login := strings.ToLower(donationAccount)
-	rewards[login] += weiToShannonInt64(donation)
 
 	if len(u.config.PoolFeeAddress) != 0 {
 		address := strings.ToLower(u.config.PoolFeeAddress)
