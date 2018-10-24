@@ -1,0 +1,25 @@
+language: go
+sudo: false
+matrix:
+  include:
+      # These are the latest Go versions
+    - os: linux
+      dist: trusty
+      sudo: required
+      go: 1.11.x
+      script:
+        - make all
+      before_deploy:
+        - sh build/deploy.sh
+      deploy:
+        provider: releases
+        api_key:
+          secure: eQcXe6vJ2qmyjxyyq1EN7O0A3XaqTLlD5/SJSdQNurrO8tZbYvWWKJX44bGxsZxYz+dNbM/HnVpK3z5UctlYM3gpRHBwfKiWG2+wKdppciyX08WVsSX9eU7TkCX1zS9CTY4iZdre5bKt0i9BGOLDID4W8st/u9B2ksnQ1CHZzODbxjpn3m1J/FSfjMjF+HZfk5WgmepvX71JKU4WXXua79EmQwdlVoNH5vKGIcO1JVtyQE0AB+c+uyCdxAs83u98h4EY9fFsLPd+xEXTIFIu29LOzSyGSqQJjiJhdYNqozANwzH7938ujuHhi1oRgR5DYmk0rVxMKXdmWJI1FD+XQYahLWptncZN4AzPRHuPXO2kK+RjUTysl08Av9ExwbYuEKqPkL47iwkiTxjm+jF5Wq2iAu1P760dKBSAp3O16hTc8cXI08ndbKGpNDUh5I9RxbOWzK98hJ6R/LrqynYNQWcvFkERL17Bg0mRQM2JUyutm03GZIiGPxsbO/pm9ijyVULVnQSIGe746mdvlky4NJyvwv2R+vxlA7w845WuHyKiDnIoVCX9ld7zBKq6s9ywKpe8xYN02JkZKeNUrLqkZxk0HQDpfJNHdjt2Ro9zOlL0bIJjpw95+/kRxksW53Ci931ftC74aWGQEuOY2GGRxNLXa/yTseYR9cPw/+mE/+Q=
+        file: teo-pool-$TRAVIS_OS_NAME-$TRAVIS_TAG.*
+        file_glob: true
+        draft: true
+        on:
+          repo: tao-foundation/open-teo-pool
+          tags: true
+        skip_cleanup: true
+        tag_name: "$TRAVIS_TAG"
