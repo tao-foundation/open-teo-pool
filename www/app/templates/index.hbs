@@ -44,6 +44,7 @@
   <div>
     <hr/>
     <h4 class="note note-info text-center">
+	<div> <p>
 	<strong>TEO VIP Mainnet : This pool has applied Payout WhiteLists</strong> <br>
 	<strong> until public pool open, this policy will applied. </strong> <br>
 	<strong> Who whitelisted </strong><br>
@@ -54,9 +55,12 @@
 	5. Any contributors <br>
 
         
-	<br><br>
+	<br><hr/><br>
+
       NVIDIA GPU : teominer.exe -U -P stratum://[Your Wallet Address].[Worker]@{{config.StratumHost}}:8008 <br><br>
       AMD    GPU : teominer.exe -G -P stratum://[Your Wallet Address].[Worker]@{{config.StratumHost}}:8008
+
+	</p></div>
     </h4>
   </div>
   <div>
@@ -65,13 +69,23 @@
        Download teominer here <a href="https://github.com/tao-foundation/teominer/releases" rel="nofollow" target="_blank">https://github.com/tao-foundation/teominer/releases</a>
 
 	<br><br>
+
+	<div> <p>
 <strong> TEO VIP Pool Mining Example </strong> <br>
 <strong> - Apply FailSafe to Pool2 - CUDA Example - </strong> <br>
 
-<br>
-teominer  -U -P stratum://0x5ad71f1852928d0527c69855880edc4a766b142c.pc1@pool1.tao.foundation:8008 -P stratum://0x5ad71f1852928d0527c69855880edc4a766b142c.pc1@pool2.tao.foundation:8008
+<br><pre align=left>
+setx GPU_FORCE_64BIT_PTR 0
+setx GPU_MAX_HEAP_SIZE 100
+setx GPU_USE_SYNC_OBJECTS 1
+setx GPU_MAX_ALLOC_PERCENT 100
+setx GPU_SINGLE_ALLOC_PERCENT 100
 
+teominer  -U -P stratum://0x5ad71f1852928d0527c69855880edc4a766b142c.pc1@pool1.tao.foundation:8008 -P stratum://0x5ad71f1852928d0527c69855880edc4a766b142c.pc1@pool2.tao.foundation:8008
+</pre>
 <br> <br>
+	
+	</p></div>
 
     </h4>
   </div>
