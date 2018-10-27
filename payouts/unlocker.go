@@ -271,7 +271,7 @@ func (u *BlockUnlocker) unlockPendingBlocks() {
 	if err != nil {
 		u.halt = true
 		u.lastFail = err
-		log.Printf("Failed to get block candidates from backend: %v", err)
+		log.Printf("Failed (5)to get block candidates from backend: %v", err)
 		return
 	}
 
@@ -306,17 +306,17 @@ func (u *BlockUnlocker) unlockPendingBlocks() {
 	for _, block := range result.maturedBlocks {
 		revenue, minersProfit, poolProfit, roundRewards, err := u.calculateRewards(block)
 		if err != nil {
-			u.halt = true
+			u.halt = false // u.halt = true
 			u.lastFail = err
-			log.Printf("Failed to calculate rewards for round %v: %v", block.RoundKey(), err)
-			return
+			log.Printf("Failed (1) to calculate rewards for round %v: %v", block.RoundKey(), err)
+			// return
 		}
 		err = u.backend.WriteImmatureBlock(block, roundRewards)
 		if err != nil {
-			u.halt = true
+			u.halt = false // u.halt = true
 			u.lastFail = err
-			log.Printf("Failed to credit rewards for round %v: %v", block.RoundKey(), err)
-			return
+			log.Printf("Failed (2) to credit rewards for round %v: %v", block.RoundKey(), err)
+			// return
 		}
 		totalRevenue.Add(totalRevenue, revenue)
 		totalMinersProfit.Add(totalMinersProfit, minersProfit)
@@ -350,6 +350,8 @@ func (u *BlockUnlocker) unlockAndCreditMiners() {
 		return
 	}
 
+	log.Printf("unlockAndCreditMiners() start");
+
 	current, err := u.rpc.GetLatestBlock()
 	if err != nil {
 		u.halt = true
@@ -369,7 +371,7 @@ func (u *BlockUnlocker) unlockAndCreditMiners() {
 	if err != nil {
 		u.halt = true
 		u.lastFail = err
-		log.Printf("Failed to get block candidates from backend: %v", err)
+		log.Printf("Failed (3) to get block candidates from backend: %v", err)
 		return
 	}
 
@@ -407,14 +409,14 @@ func (u *BlockUnlocker) unlockAndCreditMiners() {
 		if err != nil {
 			u.halt = true
 			u.lastFail = err
-			log.Printf("Failed to calculate rewards for round %v: %v", block.RoundKey(), err)
+			log.Printf("Failed (10) to calculate rewards for round %v: %v", block.RoundKey(), err)
 			return
 		}
 		err = u.backend.WriteMaturedBlock(block, roundRewards)
 		if err != nil {
 			u.halt = true
 			u.lastFail = err
-			log.Printf("Failed to credit rewards for round %v: %v", block.RoundKey(), err)
+			log.Printf("Failed (11) to credit rewards for round %v: %v", block.RoundKey(), err)
 			return
 		}
 		totalRevenue.Add(totalRevenue, revenue)
@@ -476,10 +478,12 @@ func (u *BlockUnlocker) calculateRewards(block *storage.BlockData) (*big.Rat, *b
 func calculateRewardsForShares(shares map[string]int64, total int64, reward *big.Rat) map[string]int64 {
 	rewards := make(map[string]int64)
 
+	log.Printf("calculateRewardsForShares() start : total %v ,rewards %v", total, rewards)
 	for login, n := range shares {
 		percent := big.NewRat(n, total)
 		workerReward := new(big.Rat).Mul(reward, percent)
 		rewards[login] += weiToShannonInt64(workerReward)
+		log.Printf("Calc Share rewards %v: %v hash(%v) ", login, rewards[login], percent)
 	}
 	return rewards
 }

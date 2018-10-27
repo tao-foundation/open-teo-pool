@@ -2,6 +2,7 @@ package storage
 
 import (
 	"fmt"
+	"log"
 	"math"
 	"math/big"
 	"strconv"
@@ -349,7 +350,12 @@ func (r *RedisClient) WriteBlock(login, id string, params []string, diff, roundD
 	ms := util.MakeTimestamp()
 	ts := ms / 1000
 
+	
 	cmds, err := tx.Exec(func() error {
+
+		/*
+		log.Printf("WriteBlock , tx.Multi() WriteBlock , writeshare login: %v, id: %v :\n diff: %v, rndiff: %v, height: %v, expire: %v ", login, id, diff, roundDiff, height, window )
+		*/
 		r.writeShare(tx, ms, ts, login, id, diff, window)
 		tx.HSet(r.formatKey("stats"), "lastBlockFound", strconv.FormatInt(ts, 10))
 		tx.HDel(r.formatKey("stats"), "roundShares")
@@ -361,26 +367,33 @@ func (r *RedisClient) WriteBlock(login, id string, params []string, diff, roundD
 		return nil
 	})
 	if err != nil {
+		// log.Printf("WriteBlock, tx1 error : %v ", err )
 		return false, err
 	} else {
 
 		shares := cmds[len(cmds)-1].(*redis.StringSliceCmd).Val()
+		// log.Printf("WriteBlock, tx2 redis.go shares %v cmd: %v , err %v ", shares, cmds, err )
 
 		tx2 := r.client.Multi()
 		defer tx2.Close()
 
+		var vn string
 		totalshares := make(map[string]int64)
 		for _, val := range shares {
 			totalshares[val] += 1
+			vn=val;
 		}
+		// log.Printf("totalShares[%v] %v writeShare() redis.go ", vn, totalshares[vn] )
 
 		_, err := tx2.Exec(func() error {
+			// log.Printf("WriteBlock : Error on tx2.Multi() %v CMD set /redis.go ", err )
 			for k, v := range totalshares {
 				tx2.HIncrBy(r.formatRound(int64(height), params[0]), k, v)
 			}
 			return nil
 		})
 		if err != nil {
+			log.Printf("WriteBlock, tx2.Exec error : %v ", err )
 			return false, err
 		}
 
@@ -398,7 +411,18 @@ func (r *RedisClient) WriteBlock(login, id string, params []string, diff, roundD
 }
 
 func (r *RedisClient) writeShare(tx *redis.Multi, ms, ts int64, login, id string, diff int64, expire time.Duration) {
-	times := int(diff / 1000000000)
+	// times := int(diff / 1000000000)
+	// TODO :: FIX :: 위의 나누기 는 10MH 베이스라서, 이것보다 적을 경우 풀에 문제가 생긴다
+	// Diff is less than 10M Reference Diff then, base to diff to RefDiff
+
+	var times int
+
+	if (diff < 1000000000) {
+		times = 1
+	} else{
+		times = int(diff / 1000000000)
+	}
+
 	for i := 0; i < times; i++ {
 		tx.LPush(r.formatKey("lastshares"), login)
 	}
