@@ -377,11 +377,11 @@ func (r *RedisClient) WriteBlock(login, id string, params []string, diff, roundD
 		tx2 := r.client.Multi()
 		defer tx2.Close()
 
-		var vn string
+		// var vn string
 		totalshares := make(map[string]int64)
 		for _, val := range shares {
 			totalshares[val] += 1
-			vn=val;
+		//	vn=val;
 		}
 		// log.Printf("totalShares[%v] %v writeShare() redis.go ", vn, totalshares[vn] )
 
