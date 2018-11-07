@@ -33,9 +33,13 @@ Clone & compile:
 
 ### Running Pool & Building Frontend
 
-FrontEnd Code is on WWW
+FrontEnd Code is on www directory.
+In case of configuration, you can refer sammy007/open-ethereum-pool docs.
 
 ```
+cd www
+npm install -g ember-cli@2.9.1
+npm install -g bower
 npm install
 bower install
 ./build.sh
