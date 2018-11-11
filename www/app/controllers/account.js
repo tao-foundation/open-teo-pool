@@ -149,5 +149,12 @@ export default Ember.Controller.extend({
       return 24 * 60 * 60 / this.get('config').BlockTime * this.get('config').BlockReward *
         this.getWithDefault('model.hashrate') / this.get('hashrate');
     }
+  }),
+
+  earnPerMonth: Ember.computed('model', {
+    get() {
+      return 30 * 24 * 60 * 60 / this.get('config').BlockTime * this.get('config').BlockReward *
+        this.getWithDefault('model.hashrate') / this.get('hashrate');
+    }
   })
 });
