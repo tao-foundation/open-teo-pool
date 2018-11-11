@@ -19,7 +19,7 @@
             <td>{{k}}</td>
             <td>{{format-hashrate v.hr}}</td>
             <td>{{format-hashrate v.hr2}}</td>
-            <td>{{format-number (worker-earnpermonth v.hr netstats.hashrate)}}</td>
+            <td>{{format-number (worker-earnpermonth v.hr netstats.hashrate)}} <span>{{config.Unit}}</span></td>
             <td>{{format-relative (seconds-to-ms v.lastBeat)}}</td>
           </tr>
         {{/each-in}}
