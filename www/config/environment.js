@@ -26,7 +26,7 @@ module.exports = function(environment) {
       StratumPort: 8008,
 
       // Fee and payout details
-      PoolFee: '0.2%',
+      PoolFee: '0.4%',
       PayoutThreshold: '0.5 TEO',
 
       // Basic coin info for extra features support
@@ -35,7 +35,7 @@ module.exports = function(environment) {
       BlockReward: 5,
 
       // For network hashrate (change for your favourite fork)
-      BlockTime: 14.4
+      BlockTime: 13.4
     }
   };
 
