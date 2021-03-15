@@ -49,19 +49,26 @@
   <strong> If you join Pool, and ask direct to admin, join the channel. 풀에 대해서 문의 하시려면 다음의 Telegram 채널에 들어오세요. </strong> <br>
   <strong> <a href="https://t.me/trustfarmblockchaintalk" rel="nofollow" target="_blank">Telegram Channel Join하기</a> </strong><br>
 
-  <br><hr/><br>
+  <br><hr/>
+	<hr>
 
 	<strong>TEO Public Mainnet has started </strong> <br>
 	<strong>another 3rd party pool will be listed here </strong><br>
 	1. pool1 will be shutdown in near future and pool3 will be public and changed name to teopool transparently <br>
-        <strong>
-        2. ETH/ETC airdrop finished <a href="https://forum.tao.foundation/topic/36/eng-teo-status-and-notify-teo-will-full-public" rel="nofollow" target="_blank"> TEO Status and Full Public</a> </strong><br>
+
+        <br>
+        <strong> -- TEO New Pool Added -- </strong> <br>
+        <br>
+        1. <a href="http://pool.baikalmine.com/en/teo/#" rel="nofollow" target="_blank"> Baikalmine TEO Pool </a> <br>
+
+        <hr><strong>
+        ETH/ETC airdrop finished <a href="https://forum.tao.foundation/topic/36/eng-teo-status-and-notify-teo-will-full-public" rel="nofollow" target="_blank"> TEO Status and Full Public</a> </strong><br>
 
 	<br><hr/>
 	<br> <strong> Pool Fee will increased to 1% and more </strong> <br><br><hr/>
 
-      NVIDIA GPU : teominer.exe -U -P stratum://[Your Wallet Address].[Worker]@{{config.StratumHost}}:8008 <br><br>
-      AMD    GPU : teominer.exe -G -P stratum://[Your Wallet Address].[Worker]@{{config.StratumHost}}:8008 <br><br>
+      NVIDIA GPU : teominer.exe  --work-timeout=720 -U -P stratum://[Your Wallet Address].[Worker]@{{config.StratumHost}}:8008 <br><br>
+      AMD    GPU : teominer.exe  --work-timeout=720 -G -P stratum://[Your Wallet Address].[Worker]@{{config.StratumHost}}:8008 <br><br>
 	Please refer more advanced options in batchfile in package file <a href="https://github.com/tao-foundation/teominer/releases/download/v0.16.3/teoMiner.0.16.3.win10.cuda10.package.zip" rel="nofollow" target="_blank"> batchfile in package file </a>
 
 	</p></div>
@@ -85,7 +92,7 @@ setx GPU_USE_SYNC_OBJECTS 1
 setx GPU_MAX_ALLOC_PERCENT 100
 setx GPU_SINGLE_ALLOC_PERCENT 100
 
-teominer  -U -P stratum://0x5ad71f1852928d0527c69855880edc4a766b142c.pc1@teopool.tao.foundation:8008 -P stratum://0x5ad71f1852928d0527c69855880edc4a766b142c.pc1@teopool.tao.foundation:8008 -P stratum://0x5ad71f1852928d0527c69855880edc4a766b142c.pc1@teopool2.tao.foundation:8008
+teominer   --work-timeout=720 -U -P stratum://0x5ad71f1852928d0527c69855880edc4a766b142c.pc1@pool1.tao.foundation:8008 -P stratum://0x5ad71f1852928d0527c69855880edc4a766b142c.pc1@pool2.tao.foundation:8008
 </pre>
 <br> <br>
 
