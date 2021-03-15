@@ -47,8 +47,9 @@ bower install
 
 
 ### Credits
-
-Made by sammy007. Licensed under GPLv3.
+Licensed under GPLv3.
+Made by trustfarm. for TEO and tETHASHv1 algorithm coin.
+Made by sammy007.
 
 #### Contributors
 
