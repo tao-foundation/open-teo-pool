@@ -34,7 +34,8 @@ Clone & compile:
 ### Running Pool & Building Frontend
 
 FrontEnd Code is on www directory.
-In case of configuration, you can refer sammy007/open-ethereum-pool docs.
+In case of configuration, you can refer https://github.com/tao-foundation/open-teo-pool/tree/master/docs.
+
 
 ```
 cd www
